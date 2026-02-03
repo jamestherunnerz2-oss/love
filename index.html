@@ -44,6 +44,91 @@
       mix-blend-mode:overlay;
       opacity:.6;
     }
+    <!-- Player do YouTube (fica invisível, só para tocar a música) -->
+<div id="ytWrap" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;">
+  <div id="ytplayer"></div>
+</div>
+
+<!-- Botão da música -->
+<button id="ytBtn" class="btn" style="
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:99;
+">
+  ▶ Tocar nossa música
+</button>
+
+<script>
+  // ID do vídeo do YouTube (Timbernades - Garupa de Moto Amarela)
+  const YT_VIDEO_ID = "SKbWfPK_Ats";
+
+  let ytPlayer;
+  let isReady = false;
+  let isPlaying = false;
+
+  // Carrega a API do YouTube
+  (function loadYT(){
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+  })();
+
+  // Função chamada automaticamente pela API
+  window.onYouTubeIframeAPIReady = function() {
+    ytPlayer = new YT.Player("ytplayer", {
+      height: "1",
+      width: "1",
+      videoId: YT_VIDEO_ID,
+      playerVars: {
+        autoplay: 0,
+        controls: 0,
+        disablekb: 1,
+        fs: 0,
+        loop: 1,
+        playlist: YT_VIDEO_ID,
+        modestbranding: 1,
+        rel: 0
+      },
+      events: {
+        onReady: () => {
+          isReady = true;
+        },
+        onStateChange: (e) => {
+          // 1 = tocando | 2 = pausado
+          if (e.data === 1) {
+            isPlaying = true;
+            updateBtn();
+          }
+          if (e.data === 2) {
+            isPlaying = false;
+            updateBtn();
+          }
+        }
+      }
+    });
+  };
+
+  const btn = document.getElementById("ytBtn");
+
+  function updateBtn(){
+    btn.textContent = isPlaying
+      ? "⏸ Pausar música"
+      : "▶ Tocar nossa música";
+  }
+
+  btn.addEventListener("click", () => {
+    if (!isReady) return;
+
+    if (!isPlaying) {
+      ytPlayer.unMute();
+      ytPlayer.setVolume(60);
+      ytPlayer.playVideo();
+    } else {
+      ytPlayer.pauseVideo();
+    }
+  });
+</script>
 
     a{color:inherit}
     .wrap{
@@ -606,3 +691,4 @@
     }
   });
 </script>
+
