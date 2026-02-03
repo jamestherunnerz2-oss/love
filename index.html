@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -33,7 +34,6 @@
       overflow-x:hidden;
     }
 
-    /* “Grain” leve + vinheta */
     body:before{
       content:"";
       position:fixed; inset:0;
@@ -44,91 +44,6 @@
       mix-blend-mode:overlay;
       opacity:.6;
     }
-    <!-- Player do YouTube (fica invisível, só para tocar a música) -->
-<div id="ytWrap" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;">
-  <div id="ytplayer"></div>
-</div>
-
-<!-- Botão da música -->
-<button id="ytBtn" class="btn" style="
-  position:fixed;
-  right:16px;
-  bottom:16px;
-  z-index:99;
-">
-  ▶ Tocar nossa música
-</button>
-
-<script>
-  // ID do vídeo do YouTube (Timbernades - Garupa de Moto Amarela)
-  const YT_VIDEO_ID = "SKbWfPK_Ats";
-
-  let ytPlayer;
-  let isReady = false;
-  let isPlaying = false;
-
-  // Carrega a API do YouTube
-  (function loadYT(){
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-  })();
-
-  // Função chamada automaticamente pela API
-  window.onYouTubeIframeAPIReady = function() {
-    ytPlayer = new YT.Player("ytplayer", {
-      height: "1",
-      width: "1",
-      videoId: YT_VIDEO_ID,
-      playerVars: {
-        autoplay: 0,
-        controls: 0,
-        disablekb: 1,
-        fs: 0,
-        loop: 1,
-        playlist: YT_VIDEO_ID,
-        modestbranding: 1,
-        rel: 0
-      },
-      events: {
-        onReady: () => {
-          isReady = true;
-        },
-        onStateChange: (e) => {
-          // 1 = tocando | 2 = pausado
-          if (e.data === 1) {
-            isPlaying = true;
-            updateBtn();
-          }
-          if (e.data === 2) {
-            isPlaying = false;
-            updateBtn();
-          }
-        }
-      }
-    });
-  };
-
-  const btn = document.getElementById("ytBtn");
-
-  function updateBtn(){
-    btn.textContent = isPlaying
-      ? "⏸ Pausar música"
-      : "▶ Tocar nossa música";
-  }
-
-  btn.addEventListener("click", () => {
-    if (!isReady) return;
-
-    if (!isPlaying) {
-      ytPlayer.unMute();
-      ytPlayer.setVolume(60);
-      ytPlayer.playVideo();
-    } else {
-      ytPlayer.pauseVideo();
-    }
-  });
-</script>
 
     a{color:inherit}
     .wrap{
@@ -292,7 +207,6 @@
       z-index:2; position:relative;
     }
 
-    /* Galeria */
     .gallery{
       margin-top:18px;
       padding:18px;
@@ -346,7 +260,6 @@
       pointer-events:none;
     }
 
-    /* Modal */
     .modal{
       position:fixed;
       inset:0;
@@ -395,7 +308,6 @@
       font-family: inherit;
     }
 
-    /* Rodapé */
     footer{
       margin-top:18px;
       opacity:.9;
@@ -404,7 +316,6 @@
       text-align:center;
     }
 
-    /* Pequenos “detalhes góticos” */
     .orn{
       position:absolute;
       right:16px;
@@ -436,8 +347,7 @@
     <header>
       <div class="badge"><span class="dot"></span> Só um poquinho do meu amor Por você</div>
       <h1>Meu amor, <span style="color:var(--red2); text-shadow: var(--glow);">você é meu lugar favorito</span>.</h1>
-      <p class="sub">
-        
+      <p class="sub"></p>
     </header>
 
     <section class="grid">
@@ -445,8 +355,7 @@
         <div class="orn" aria-hidden="true"></div>
 
         <p class="quote" id="quote">
-          Você é o café que eu preciso de manhã
-.”
+          Você é o café que eu preciso de manhã.
         </p>
 
         <div class="sig">
@@ -466,7 +375,7 @@
         <h2>Coisas que eu amo em você</h2>
         <ul class="list">
           <li>O quão você se dedica a me entender</li>
-          <li>A sua risada (Eu ouviria ela por mil vidas).</li>
+          <li>A sua risada (eu ouviria ela por mil vidas).</li>
           <li>Como você fica linda até sem tentar.</li>
           <li>A calma que seu coração me traz.</li>
           <li>Você. Inteira. Sempre.</li>
@@ -477,7 +386,7 @@
           <li>Te escolher todos os dias.</li>
           <li>Ser abrigo quando o mundo pesar.</li>
           <li>Te fazer rir mais do que duvidar.</li>
-          <li>Te amar com calma (você nunca namorou um autista antes).</li>
+          <li>Te amar com calma.</li>
         </ul>
       </aside>
     </section>
@@ -493,9 +402,7 @@
       </div>
     </section>
 
-    <footer>
-      🥀
-    </footer>
+    <footer>🥀</footer>
   </div>
 
   <!-- Modal de imagem -->
@@ -510,15 +417,14 @@
   </div>
 
   <script>
-    // Personalize aqui (opcional):
-    const NOME_DELA = "Bobona"; // Ex.: "Maria"
-    const SEU_NOME  = "Arthur";   // Ex.: "Arthur"
+    const NOME_DELA = "Bobona";
+    const SEU_NOME  = "Arthur";
 
     const frases = [
       "“Enquanto tu for meu sol para sempre vai ser verão.”",
       "“Você é a minha parte favorita do dia.”",
       "“Te amo pontos de exclamação.”",
-      "“Tudo em volta tem te confirmado não é ? .”",
+      "“Tudo em volta tem te confirmado, não é?”",
       "“Eu te amo aos berros para todos ouvirem.”"
     ];
 
@@ -540,7 +446,6 @@
       }, 140);
     });
 
-    // “Modo noite” mais intenso
     const btnMusic = document.getElementById("btnMusic");
     let night = false;
     btnMusic.addEventListener("click", () => {
@@ -550,7 +455,6 @@
       btnMusic.textContent = night ? "Voltar ao modo normal" : "Ativar “modo noite”";
     });
 
-    // Modal de fotos
     const modal = document.getElementById("modal");
     const modalImg = document.getElementById("modalImg");
     const closeBtn = document.getElementById("close");
@@ -578,117 +482,77 @@
       if(e.key === "Escape") closeModal();
     });
   </script>
-</body>
-</html>
-<audio id="music" src="timbernades.mp3" preload="auto" loop></audio>
 
-<button id="playMusic" class="btn" style="position:fixed;right:16px;bottom:16px;z-index:99;">
-  ▶ Tocar música
-</button>
+  <!-- =========================
+       YOUTUBE (MÚSICA)
+  ========================== -->
 
-<script>
-  const music = document.getElementById("music");
-  const playBtn = document.getElementById("playMusic");
+  <!-- Player do YouTube invisível -->
+  <div id="ytWrap" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;">
+    <div id="ytplayer"></div>
+  </div>
 
-  // volume ajustável
-  music.volume = 0.6;
+  <!-- Botão -->
+  <button id="ytBtn" class="btn" style="position:fixed;right:16px;bottom:16px;z-index:99;">
+    ▶ Tocar nossa música
+  </button>
 
-  playBtn.addEventListener("click", async () => {
-    try{
-      if(music.paused){
-        await music.play();
-        playBtn.textContent = "⏸ Pausar música";
-      } else {
-        music.pause();
-        playBtn.textContent = "▶ Tocar música";
-      }
-    }catch(e){
-      alert("O navegador bloqueou a reprodução automática. Tente clicar novamente.");
-    }
-  });
-</script><!-- Player do YouTube (fica invisível, só para tocar a música) -->
-<div id="ytWrap" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;">
-  <div id="ytplayer"></div>
-</div>
+  <script>
+    const YT_VIDEO_ID = "SKbWfPK_Ats";
 
-<!-- Botão da música -->
-<button id="ytBtn" class="btn" style="
-  position:fixed;
-  right:16px;
-  bottom:16px;
-  z-index:99;
-">
-  ▶ Tocar nossa música
-</button>
+    let ytPlayer;
+    let isReady = false;
+    let isPlaying = false;
 
-<script>
-  // ID do vídeo do YouTube (Timbernades - Garupa de Moto Amarela)
-  const YT_VIDEO_ID = "SKbWfPK_Ats";
+    (function loadYT(){
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+    })();
 
-  let ytPlayer;
-  let isReady = false;
-  let isPlaying = false;
-
-  // Carrega a API do YouTube
-  (function loadYT(){
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-  })();
-
-  // Função chamada automaticamente pela API
-  window.onYouTubeIframeAPIReady = function() {
-    ytPlayer = new YT.Player("ytplayer", {
-      height: "1",
-      width: "1",
-      videoId: YT_VIDEO_ID,
-      playerVars: {
-        autoplay: 0,
-        controls: 0,
-        disablekb: 1,
-        fs: 0,
-        loop: 1,
-        playlist: YT_VIDEO_ID,
-        modestbranding: 1,
-        rel: 0
-      },
-      events: {
-        onReady: () => {
-          isReady = true;
+    window.onYouTubeIframeAPIReady = function() {
+      ytPlayer = new YT.Player("ytplayer", {
+        height: "1",
+        width: "1",
+        videoId: YT_VIDEO_ID,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          loop: 1,
+          playlist: YT_VIDEO_ID,
+          modestbranding: 1,
+          rel: 0
         },
-        onStateChange: (e) => {
-          // 1 = tocando | 2 = pausado
-          if (e.data === 1) {
-            isPlaying = true;
-            updateBtn();
-          }
-          if (e.data === 2) {
-            isPlaying = false;
-            updateBtn();
+        events: {
+          onReady: () => { isReady = true; },
+          onStateChange: (e) => {
+            if (e.data === 1) { isPlaying = true;  updateBtn(); }
+            if (e.data === 2) { isPlaying = false; updateBtn(); }
           }
         }
+      });
+    };
+
+    const btn = document.getElementById("ytBtn");
+
+    function updateBtn(){
+      btn.textContent = isPlaying ? "⏸ Pausar música" : "▶ Tocar nossa música";
+    }
+
+    btn.addEventListener("click", () => {
+      if (!isReady) return;
+
+      if (!isPlaying){
+        ytPlayer.unMute();
+        ytPlayer.setVolume(60);
+        ytPlayer.playVideo();
+      } else {
+        ytPlayer.pauseVideo();
       }
     });
-  };
+  </script>
 
-  const btn = document.getElementById("ytBtn");
-
-  function updateBtn(){
-    btn.textContent = isPlaying
-      ? "⏸ Pausar música"
-      : "▶ Tocar nossa música";
-  }
-
-  btn.addEventListener("click", () => {
-    if (!isReady) return;
-
-    if (!isPlaying) {
-      ytPlayer.unMute();
-      ytPlayer.setVolume(60);
-      ytPlayer.playVideo();
-    } else {
-      ytPlayer.pauseVideo();
-    }
-  });
-</script>
-
+</body>
+</html>
